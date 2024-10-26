@@ -20,11 +20,13 @@ const nextQuestionElement = document.querySelector('#nextQuestion')
 		return { question, answers, correct }
 	};
 
-	// todo: create your "renderQuestion" function
+
+
+
 	const renderQuestion = ({ question, answers, correct }) => {
 
 	//display
-	const answersElement = document.getElementById('answersElement');
+	const answersElement = document.getElementById('answers');
 	answersElement.textContent = question;
 	//clear
 	answersElement.innerHTML = '';
@@ -35,7 +37,7 @@ const nextQuestionElement = document.querySelector('#nextQuestion')
 		button.textContent = answer;
 
 		// Add click event listener
-		button.addEventListener('click', function() {
+		nextQuestion.addEventListener('click', function() {
 			//is the answer correct or incorrect?
 			if (answer === correct) {
 				button.classList.add('correct');
@@ -44,19 +46,26 @@ const nextQuestionElement = document.querySelector('#nextQuestion')
 				return;
 			}
 
-			button.disabled = true;
+			nextQuestion.disabled = true;
 			alert('Incorrect!');
 		});
 
 		// Append button to answers element
 		answersElement.appendChild(button);
 	});
-
 	};
 
-	// todo: add the event listener to the "nextQuestion" button
+
+	
+
+	//wait for button click to call functions
+    nextQuestion.addEventListener('click', async () => {
+        renderQuestion(await getNextQuestion())
+		nextQuestion.disabled = true
+		setTimeout(() => nextQuestion.disabled = false, 10000)
+    });
 
 })()
 
 // mimic a click on the "nextQuestion" button to show the first question
-nextQuestionElement.click()
+nextQuestion.click()
