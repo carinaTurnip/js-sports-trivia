@@ -21,7 +21,36 @@ const nextQuestionElement = document.querySelector('#nextQuestion')
 	};
 
 	// todo: create your "renderQuestion" function
-	const renderQuestion = async () => {
+	const renderQuestion = ({ question, answers, correct }) => {
+
+	//display
+	const answersElement = document.getElementById('answersElement');
+	answersElement.textContent = question;
+	//clear
+	answersElement.innerHTML = '';
+
+	//create buttons
+	answers.forEach(answer => {
+		const button = document.createElement('button');
+		button.textContent = answer;
+
+		// Add click event listener
+		button.addEventListener('click', function() {
+			//is the answer correct or incorrect?
+			if (answer === correct) {
+				button.classList.add('correct');
+				answersElement.querySelectorAll('button').forEach(b => b.disabled = true);
+				alert('Correct!');
+				return;
+			}
+
+			button.disabled = true;
+			alert('Incorrect!');
+		});
+
+		// Append button to answers element
+		answersElement.appendChild(button);
+	});
 
 	};
 
